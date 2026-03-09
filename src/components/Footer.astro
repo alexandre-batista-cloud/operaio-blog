@@ -1,0 +1,201 @@
+---
+const today = new Date();
+---
+
+<footer class="site-footer">
+	<div class="footer-inner">
+		<div class="footer-grid">
+			<div class="footer-col footer-brand">
+				<div class="footer-logo">
+					<span class="logo-mark">O</span>
+					<span class="logo-name">Operaio</span>
+				</div>
+				<p class="footer-tagline">
+					Sistema digital para negócios locais. Reduzimos o atrito, organizamos a operação e fazemos sua empresa vender mais.
+				</p>
+				<a href="https://operaio.com.br" class="footer-site-link" target="_blank" rel="noopener">
+					operaio.com.br →
+				</a>
+			</div>
+
+			<div class="footer-col">
+				<h4 class="footer-heading">Blog</h4>
+				<ul class="footer-links">
+					<li><a href="/blog">Todos os artigos</a></li>
+					<li><a href="/blog#seo-local">SEO Local</a></li>
+					<li><a href="/blog#sites">Sites que Convertem</a></li>
+					<li><a href="/blog#trafego">Tráfego Pago</a></li>
+					<li><a href="/blog#diagnostico">Diagnóstico Comercial</a></li>
+				</ul>
+			</div>
+
+			<div class="footer-col">
+				<h4 class="footer-heading">Serviços</h4>
+				<ul class="footer-links">
+					<li><a href="https://operaio.com.br/#diagnostico" target="_blank">Diagnóstico Gratuito</a></li>
+					<li><a href="https://operaio.com.br/#pacotes" target="_blank">Pacotes</a></li>
+					<li><a href="https://operaio.com.br/#contato" target="_blank">Contato</a></li>
+				</ul>
+			</div>
+
+			<div class="footer-col">
+				<h4 class="footer-heading">Contato</h4>
+				<ul class="footer-links">
+					<li><a href="mailto:contato@operaio.com.br">contato@operaio.com.br</a></li>
+					<li><span class="footer-text">Goiânia · Anápolis · GO</span></li>
+				</ul>
+				<div class="footer-rss">
+					<a href="/rss.xml" class="rss-link">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+							<path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"/>
+						</svg>
+						RSS Feed
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="footer-bottom">
+			<span class="footer-copy">
+				© {today.getFullYear()} Operaio. Todos os direitos reservados.
+			</span>
+			<span class="footer-made">
+				Feito com Astro + Cloudflare Pages
+			</span>
+		</div>
+	</div>
+</footer>
+
+<style>
+	.site-footer {
+		margin-top: 5rem;
+		background: #0a1520;
+		border-top: 1px solid var(--border);
+	}
+	.footer-inner {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 3.5rem 1.5rem 2rem;
+	}
+	.footer-grid {
+		display: grid;
+		grid-template-columns: 2fr 1fr 1fr 1fr;
+		gap: 3rem;
+		margin-bottom: 3rem;
+	}
+	.footer-logo {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		margin-bottom: 1rem;
+	}
+	.logo-mark {
+		width: 30px;
+		height: 30px;
+		background: var(--accent);
+		border-radius: 7px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-weight: 800;
+		font-size: 0.9rem;
+		color: #fff;
+	}
+	.logo-name {
+		font-weight: 700;
+		font-size: 1rem;
+		color: var(--white);
+	}
+	.footer-tagline {
+		font-size: 0.875rem;
+		color: var(--text-muted);
+		line-height: 1.6;
+		margin-bottom: 1rem;
+	}
+	.footer-site-link {
+		font-size: 0.875rem;
+		font-weight: 600;
+		color: var(--accent);
+		text-decoration: none;
+	}
+	.footer-site-link:hover { color: var(--accent-light); }
+	.footer-heading {
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--text-muted);
+		margin-bottom: 1rem;
+	}
+	.footer-links {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+	.footer-links li {
+		margin-bottom: 0.6rem;
+	}
+	.footer-links a {
+		font-size: 0.875rem;
+		color: var(--text-faint);
+		text-decoration: none;
+		transition: color 0.15s;
+	}
+	.footer-links a:hover { color: var(--text); }
+	.footer-text {
+		font-size: 0.875rem;
+		color: var(--text-faint);
+	}
+	.footer-rss {
+		margin-top: 1rem;
+	}
+	.rss-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		font-size: 0.8rem;
+		font-weight: 600;
+		color: var(--accent);
+		text-decoration: none;
+		padding: 0.35rem 0.7rem;
+		border: 1px solid var(--tag-border);
+		border-radius: 5px;
+		background: var(--tag-bg);
+		transition: background 0.15s;
+	}
+	.rss-link:hover {
+		background: rgba(240,90,40,0.2);
+		color: var(--accent-light);
+	}
+	.footer-bottom {
+		border-top: 1px solid var(--border);
+		padding-top: 1.5rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+	.footer-copy, .footer-made {
+		font-size: 0.8rem;
+		color: var(--text-faint);
+	}
+	@media (max-width: 900px) {
+		.footer-grid {
+			grid-template-columns: 1fr 1fr;
+			gap: 2rem;
+		}
+		.footer-brand {
+			grid-column: 1 / -1;
+		}
+	}
+	@media (max-width: 560px) {
+		.footer-grid {
+			grid-template-columns: 1fr;
+		}
+		.footer-bottom {
+			flex-direction: column;
+			text-align: center;
+		}
+	}
+</style>

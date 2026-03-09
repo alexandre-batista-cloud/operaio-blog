@@ -1,0 +1,399 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const posts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 9);
+
+const featured = posts.slice(0, 2);
+const recent = posts.slice(2, 9);
+
+const categories = [
+	{ slug: 'seo-local', label: 'SEO Local', icon: '📍' },
+	{ slug: 'sites', label: 'Sites que Convertem', icon: '💻' },
+	{ slug: 'trafego', label: 'Tráfego Pago', icon: '📈' },
+	{ slug: 'diagnostico', label: 'Diagnóstico', icon: '🔍' },
+];
+---
+
+<!doctype html>
+<html lang="pt-BR">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+
+		<!-- Hero strip -->
+		<section class="hero-strip">
+			<div class="hero-inner">
+				<div class="hero-badge">
+					<span class="dot">●</span> Blog Operaio
+				</div>
+				<h1 class="hero-title">
+					Negócios locais que vendem<br />
+					<span class="accent">mais e melhor.</span>
+				</h1>
+				<p class="hero-desc">
+					SEO local, sites de alta conversão e tráfego pago com resultado. Conteúdo prático para donos e gestores de negócios em Goiânia e Anápolis.
+				</p>
+				<div class="hero-actions">
+					<a href="/blog" class="btn-primary">Ver todos os artigos</a>
+					<a href="https://operaio.com.br/#diagnostico" class="btn-outline" target="_blank" rel="noopener">Diagnóstico gratuito →</a>
+				</div>
+			</div>
+		</section>
+
+		<!-- Category nav -->
+		<div class="cat-strip">
+			<div class="cat-strip-inner">
+				{categories.map(cat => (
+					<a href={`/blog#${cat.slug}`} class="cat-pill">
+						<span>{cat.icon}</span>
+						{cat.label}
+					</a>
+				))}
+			</div>
+		</div>
+
+		<main>
+			<!-- Featured 2-col cards (Kantar style) -->
+			{featured.length > 0 && (
+				<section class="section">
+					<div class="section-header">
+						<span class="section-label">● DESTAQUES</span>
+						<a href="/blog" class="section-link">Ver todos →</a>
+					</div>
+					<div class="featured-grid">
+						{featured.map(post => (
+							<a href={`/blog/${post.id}/`} class="featured-card card">
+								{post.data.heroImage && (
+									<div class="featured-img">
+										<img src={post.data.heroImage} alt={post.data.title} loading="lazy" />
+									</div>
+								)}
+								<div class="featured-body">
+									<span class="cat-badge">● ARTIGO</span>
+									<h2 class="featured-title">{post.data.title}</h2>
+									<p class="featured-desc">{post.data.description}</p>
+									<div class="card-meta">
+										<FormattedDate date={post.data.pubDate} />
+										<span class="read-link">Ler artigo →</span>
+									</div>
+								</div>
+							</a>
+						))}
+					</div>
+				</section>
+			)}
+
+			<!-- Recent articles grid -->
+			{recent.length > 0 && (
+				<section class="section">
+					<div class="section-header">
+						<span class="section-label">● ARTIGOS RECENTES</span>
+					</div>
+					<div class="articles-grid">
+						{recent.map(post => (
+							<a href={`/blog/${post.id}/`} class="article-card card">
+								{post.data.heroImage && (
+									<div class="article-img">
+										<img src={post.data.heroImage} alt={post.data.title} loading="lazy" />
+									</div>
+								)}
+								<div class="article-body">
+									<span class="cat-badge">Artigo</span>
+									<h3 class="article-title">{post.data.title}</h3>
+									<p class="article-desc">{post.data.description}</p>
+									<div class="card-meta">
+										<FormattedDate date={post.data.pubDate} />
+									</div>
+								</div>
+							</a>
+						))}
+					</div>
+				</section>
+			)}
+
+			<!-- CTA banner -->
+			<section class="cta-banner">
+				<div class="cta-banner-inner">
+					<div class="cta-text">
+						<h2>Qual o nível de fricção digital do seu negócio?</h2>
+						<p>Faça um diagnóstico gratuito em 30 minutos e descubra quanto você está perdendo em vendas por problemas que têm solução.</p>
+					</div>
+					<a href="https://operaio.com.br/#diagnostico" class="btn-primary" target="_blank" rel="noopener">
+						Diagnóstico gratuito →
+					</a>
+				</div>
+			</section>
+		</main>
+
+		<Footer />
+	</body>
+</html>
+
+<style>
+	/* Hero */
+	.hero-strip {
+		border-bottom: 1px solid var(--border);
+		background: linear-gradient(160deg, #0f1923 60%, #16232e 100%);
+		padding: 4rem 1.5rem 3.5rem;
+	}
+	.hero-inner {
+		max-width: 760px;
+		margin: 0 auto;
+		text-align: center;
+	}
+	.hero-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		font-size: 0.75rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--accent);
+		margin-bottom: 1.25rem;
+	}
+	.hero-badge .dot {
+		font-size: 0.6rem;
+	}
+	.hero-title {
+		font-size: clamp(2rem, 5vw, 3rem);
+		font-weight: 800;
+		line-height: 1.15;
+		color: var(--white);
+		margin-bottom: 1.25rem;
+		letter-spacing: -0.03em;
+	}
+	.hero-title .accent { color: var(--accent); }
+	.hero-desc {
+		font-size: 1.05rem;
+		color: var(--text-muted);
+		line-height: 1.7;
+		margin-bottom: 2rem;
+		max-width: 580px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.hero-actions {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+
+	/* Category strip */
+	.cat-strip {
+		border-bottom: 1px solid var(--border);
+		background: var(--bg-card);
+	}
+	.cat-strip-inner {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 1.5rem;
+		display: flex;
+		gap: 0.5rem;
+		overflow-x: auto;
+		scrollbar-width: none;
+	}
+	.cat-strip-inner::-webkit-scrollbar { display: none; }
+	.cat-pill {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		white-space: nowrap;
+		padding: 0.85rem 1rem;
+		font-size: 0.85rem;
+		font-weight: 500;
+		color: var(--text-muted);
+		text-decoration: none;
+		border-bottom: 2px solid transparent;
+		transition: color 0.15s, border-color 0.15s;
+	}
+	.cat-pill:hover {
+		color: var(--white);
+		border-bottom-color: var(--accent);
+	}
+
+	/* Sections */
+	.section {
+		margin-bottom: 4rem;
+	}
+	.section-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 1.5rem;
+	}
+	.section-label {
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--accent);
+	}
+	.section-link {
+		font-size: 0.875rem;
+		font-weight: 600;
+		color: var(--text-muted);
+		text-decoration: none;
+	}
+	.section-link:hover { color: var(--text); }
+
+	/* Featured 2-col */
+	.featured-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1.5rem;
+	}
+	.featured-card {
+		display: flex;
+		flex-direction: column;
+		text-decoration: none;
+		color: inherit;
+	}
+	.featured-img {
+		height: 220px;
+		overflow: hidden;
+	}
+	.featured-img img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: 12px 12px 0 0;
+		transition: transform 0.3s ease;
+	}
+	.featured-card:hover .featured-img img {
+		transform: scale(1.03);
+	}
+	.featured-body {
+		padding: 1.5rem;
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+	}
+	.featured-title {
+		font-size: 1.25rem;
+		font-weight: 700;
+		color: var(--white);
+		margin: 0.5rem 0 0.75rem;
+		line-height: 1.3;
+	}
+	.featured-desc {
+		font-size: 0.9rem;
+		color: var(--text-muted);
+		line-height: 1.6;
+		flex: 1;
+		margin-bottom: 1rem;
+	}
+
+	/* Article grid */
+	.articles-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1.25rem;
+	}
+	.article-card {
+		display: flex;
+		flex-direction: column;
+		text-decoration: none;
+		color: inherit;
+	}
+	.article-img {
+		height: 160px;
+		overflow: hidden;
+	}
+	.article-img img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: 12px 12px 0 0;
+		transition: transform 0.3s ease;
+	}
+	.article-card:hover .article-img img {
+		transform: scale(1.04);
+	}
+	.article-body {
+		padding: 1.1rem 1.25rem 1.25rem;
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+	}
+	.article-title {
+		font-size: 1rem;
+		font-weight: 700;
+		color: var(--white);
+		margin: 0.4rem 0 0.6rem;
+		line-height: 1.35;
+	}
+	.article-desc {
+		font-size: 0.845rem;
+		color: var(--text-muted);
+		line-height: 1.55;
+		flex: 1;
+		margin-bottom: 0.75rem;
+	}
+
+	/* Card meta */
+	.card-meta {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		font-size: 0.8rem;
+		color: var(--text-faint);
+	}
+	.read-link {
+		font-weight: 600;
+		color: var(--accent);
+		font-size: 0.8rem;
+	}
+
+	/* CTA Banner */
+	.cta-banner {
+		background: linear-gradient(135deg, #16232e, #1c2e3d);
+		border: 1px solid rgba(240, 90, 40, 0.2);
+		border-radius: 16px;
+		padding: 3rem 2.5rem;
+		margin-bottom: 3rem;
+	}
+	.cta-banner-inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 2rem;
+		flex-wrap: wrap;
+	}
+	.cta-text {
+		flex: 1;
+		min-width: 280px;
+	}
+	.cta-text h2 {
+		font-size: 1.5rem;
+		color: var(--white);
+		margin-bottom: 0.75rem;
+	}
+	.cta-text p {
+		font-size: 0.95rem;
+		color: var(--text-muted);
+		margin: 0;
+		line-height: 1.6;
+	}
+
+	/* Responsive */
+	@media (max-width: 900px) {
+		.articles-grid { grid-template-columns: repeat(2, 1fr); }
+	}
+	@media (max-width: 640px) {
+		.featured-grid { grid-template-columns: 1fr; }
+		.articles-grid { grid-template-columns: 1fr; }
+		.cta-banner { padding: 2rem 1.5rem; }
+	}
+</style>
